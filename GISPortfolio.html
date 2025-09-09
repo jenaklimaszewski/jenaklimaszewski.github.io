@@ -47,7 +47,37 @@
     color: #fff;
   }
 
+  /* Toggle hidden */
   .hidden { display: none; }
+
+  /* Code block style */
+  pre code {
+    display: block;
+    background: #1e1e1e;
+    color: #dcdcdc;
+    font-family: "Fira Code", monospace;
+    font-size: 0.9em;
+    padding: 1em;
+    border-radius: 8px;
+    overflow-x: auto;
+    line-height: 1.5em;
+    white-space: pre;
+  }
+
+  /* Button styling matching header */
+  button {
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    border: none;
+    background-color: #ab91b8;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover { background-color: #9976a5; }
+  button:active { background-color: #87608e; }
 </style>
 
 <!--Header-->
@@ -76,14 +106,12 @@
       in city planning.</p>
 
       <!-- Code Snippet Button -->
-      <button onclick="document.getElementById('python-snippet').classList.toggle('hidden')" 
-              style="margin-top: 1em; padding: 0.5em 1em; border: none; background-color: #4a90e2; color: white; border-radius: 6px; cursor: pointer;">
+      <button onclick="document.getElementById('python-snippet').classList.toggle('hidden')">
         Show Python Code Snippet
       </button>
 
       <!-- Python Code Snippet -->
-      <pre id="python-snippet" class="hidden" style="margin-top: 1em; background: #f5f5f5; padding: 1em; border-radius: 6px; overflow-x: auto;">
-<code>tracts_full['income_quantile'] = pd.qcut(tracts_full['B19013_001E'], q=3, labels=[1,2,3])
+      <pre id="python-snippet" class="hidden"><code>tracts_full['income_quantile'] = pd.qcut(tracts_full['B19013_001E'], q=3, labels=[1,2,3])
 tracts_full['tree_quantile'] = pd.qcut(tracts_full['tree_density'], q=3, labels=[1,2,3])
 tracts_full['bivariate_class'] = tracts_full['income_quantile'].astype(str) + "-" + tracts_full['tree_quantile'].astype(str)
 
@@ -98,15 +126,82 @@ tracts_full.plot(color=tracts_full['color'], edgecolor='black', linewidth=0.1)</
     </div>
   </div>
 
-  <!-- R Crosswalk Analysis -->
+  <!-- Worcester Pedestrian Infrastructure Analysis (QGIS + R) -->
+  <section style="margin-bottom: 3em;">
+    <h2 style="text-align: center; font-size: 2em; color: #b0355b; margin-bottom: 1.5em;">Worcester Pedestrian Infrastructure Analysis</h2>
+    
+    <div style="display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; align-items: flex-start; margin-bottom: 2em;">
+
+      <!-- QGIS Map -->
+      <div style="flex: 1; min-width: 300px; max-width: 500px;">
+        <a href="Images/busstopsshrews.png" target="_blank">
+          <img src="Images/busstopsshrews.png" alt="QGIS Cartography" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        </a>
+        <p style="margin-top: 0.5em;">For a group project, my group has to analyze a census tract in Worcester. Because of the multiple incidents surronding pedestrian safety in the tract throughout 2023 and 2024, my group decided to analyze pedestrian infrastructure in the area.  
+        My part of the project was creating spatial analyses of the area. This QGIS map showing bus stops in the Upper Shrewsbury Census Tract. This helped analyze transit accessibility and pedestrian safety incidents in 2024.</p>
+      </div>
+
+      <!-- R Crosswalk Map -->
+      <div style="flex: 1; min-width: 300px; max-width: 500px;">
+        <a href="Images/distancebtwncrosswalks.png" target="_blank">
+          <img src="Images/distancebtwncrosswalks.png" alt="R Crosswalk Analysis" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        </a>
+        <p style="margin-top: 0.5em;">This R map analyzes the spatial distribution of crosswalks at the census tract level, including average distances between them to evaluate pedestrian infrastructure. This project used R packages including sf, dplyr, ggplot2, viridis, tigris, and openxlsx.
+        </p>
+
+        <!-- Toggle Button -->
+        <button onclick="document.getElementById('r-snippet').classList.toggle('hidden')">
+          Show R Code
+        </button>
+
+        <!-- Hidden R Code Snippet -->
+        <pre id="r-snippet" class="hidden"><code># Spatial join: assign crosswalks to census tracts
+crosswalks_in_tracts <- st_join(crosswalks, worcester_city_tracts, join = st_within)
+
+# Function to compute average pairwise distance
+calc_pairwise_distances <- function(points_sf) {
+  if (nrow(points_sf) > 1) {
+    dist_matrix <- st_distance(points_sf)
+    mean(dist_matrix[upper.tri(dist_matrix)])  # average of unique distances
+  } else {
+    NA
+  }
+}
+
+# Apply by tract and convert to miles
+average_distances <- crosswalks_in_tracts %>%
+  group_by(GEOID) %>%
+  group_split() %>%
+  sapply(calc_pairwise_distances) %>%
+  units::set_units("miles") %>%
+  drop_units()</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ArcGIS Dashboard -->
   <div style="display: flex; flex-wrap: wrap; gap: 2em; margin-bottom: 3em; align-items: center;">
-    <a href="Images/distancebtwncrosswalks.png" target="_blank">
-      <img src="Images/distancebtwncrosswalks.png" alt="R Crosswalk Analysis" style="flex: 1; max-width: 500px; width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+    <a href="Images/arcgisdashboard.png" target="_blank">
+      <img src="Images/arcgisdashboard.png" alt="ArcGIS Dashboard" style="flex: 1; max-width: 500px; width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
     </a>
     <div style="flex: 2;">
-      <h3>R Crosswalk Analysis</h3>
-      <p>I created a map with R that analyzed the spatial distribution of crosswalks across Worcester, MA at the census tract level. Using crosswalk location data and U.S. Census tract boundaries, I calculated the average 
-      distance between crosswalks within each tract to evaluate how evenly pedestrian infrastructure is distributed. This project used R packages including <code>sf</code>, <code>dplyr</code>, <code>ggplot2</code>, <code>viridis</code>, <code>tigris</code>, and <code>openxlsx</code>.</p>
+      <h3>ArcGIS Dashboard</h3>
+      <p>For an undergraduate course, I built an ArcGIS Dashboard mapping food pantries in Worcester, MA and showing bus stops within 400 meters. I used buffers around the pantries and a spatial join to identify bus stops located within those zones.
+      The dashboard visualizes transit accessibility to food resources, helping identify which pantries are easily reached by public transportation. If I were to add to this project, I would include a grocery store toggle. This project was meaningful because I
+      worked at my university's pantry at the time, and the project was later included in a student-created resource guide.</p>
+    </div>
+  </div>
 
-      <!-- Toggle Button -->
-      <button onclick="docume
+  <!-- ArcGIS Cartography -->
+  <div style="display: flex; flex-wrap: wrap; gap: 2em; margin-bottom: 3em; align-items: center;">
+    <a href="Images/columbiacastresources.jpg" target="_blank">
+      <img src="Images/columbiacastresources.jpg" alt="ArcGIS Cartography" style="flex: 1; max-width: 500px; width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+    </a>
+    <div style="flex: 2;">
+      <h3>ArcGIS Cartography</h3>
+      <p>I designed an ArcGIS map of community resources in The Port neighborhood of Cambridge, MA for an affordable housing proposal competition with the Federal Home Loan Bank of Boston. 
+      The map shows important amenities such as food access points and schools, demonstrating that the area is well-resourced for potential residents.</p>
+    </div>
+  </div>
+</section>
