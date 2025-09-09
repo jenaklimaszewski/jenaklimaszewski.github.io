@@ -91,27 +91,24 @@
   </nav>
 </header> 
 
-<section style="max-width: 1100px; margin: 3em auto; padding: 2em;">
-  <h2 style="text-align: center; font-size: 2.2em; color: #b0355b; margin-bottom: 2em;">GIS Portfolio</h2>
 <!-- Python Syracuse Tree Density and Income Analysis -->
 <div style="display: flex; flex-wrap: wrap; gap: 2em; margin-bottom: 3em; justify-content: center; align-items: flex-start;">
 
   <!-- Map -->
-  <div style="flex: 1; min-width: 300px; max-width: 500px;">
+  <div style="flex: 1; min-width: 300px; max-width: 500px; display: flex; flex-direction: column; justify-content: flex-start;">
     <a href="Images/syrtreedens_map.png" target="_blank">
       <img src="Images/syrtreedens_map.png" alt="Python Syracuse Tree Density and Income Analysis" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
     </a>
     <p style="margin-top: 0.5em;">This project explored the relationship between urban greenery and socioeconomic status in Syracuse, NY. Using Python with GeoPandas and Census data, I created a bivariate choropleth map that compares tree 
-    density with median household income at the census tract level. Data was sourced from the Syracuse Data Portal.
-   </p>
+    density with median household income at the census tract level. Data was sourced from the Syracuse Data Portal.</p>
   </div>
 
   <!-- Scatterplot -->
-  <div style="flex: 1; min-width: 300px; max-width: 500px;">
+  <div style="flex: 1; min-width: 300px; max-width: 500px; display: flex; flex-direction: column; justify-content: flex-start;">
     <a href="Images/syr_scatterplot.png" target="_blank">
       <img src="Images/syr_scatterplot.png" alt="Syracuse Tree Density vs Income Scatterplot" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
     </a>
-    <p style="margin-top: 0.5em;">Scatterplot showing tree density versus median household income across Syracuse census tracts. </p>
+    <p style="margin-top: 0.5em;">This scatterplot shows tree density versus median household income across Syracuse census tracts. There is a tiny positive correlation, but not enough to indicate a trend.</p>
   </div>
 
   <div style="flex-basis: 100%; margin-top: 1em;">
@@ -134,63 +131,8 @@ tracts_full['color'] = tracts_full['bivariate_class'].map(bivariate_colors)
 
 tracts_full.plot(color=tracts_full['color'], edgecolor='black', linewidth=0.1)</code></pre>
   </div>
+
 </div>
-
-
-  <!-- Worcester Pedestrian Infrastructure Analysis (QGIS + R) -->
-  <section style="margin-bottom: 3em;">
-    <h2 style="text-align: center; font-size: 2em; color: #b0355b; margin-bottom: 1.5em;">Worcester Pedestrian Infrastructure Analysis</h2>
-    
-    <div style="display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; align-items: flex-start; margin-bottom: 2em;">
-
-      <!-- QGIS Map -->
-      <div style="flex: 1; min-width: 300px; max-width: 500px;">
-        <a href="Images/busstopsshrews.png" target="_blank">
-          <img src="Images/busstopsshrews.png" alt="QGIS Cartography" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-        </a>
-        <p style="margin-top: 0.5em;">For a group project, my group has to analyze a census tract in Worcester. Because of the multiple incidents surronding pedestrian safety in the tract throughout 2023 and 2024, my group decided to analyze pedestrian infrastructure in the area.  
-        My part of the project was creating spatial analyses of the area. This QGIS map showing bus stops in the Upper Shrewsbury Census Tract. This helped analyze transit accessibility and pedestrian safety incidents in 2024.  Data was sourced from the US Census and the Worcester
-      Open Data Portal. </p>
-      </div>
-
-      <!-- R Crosswalk Map -->
-      <div style="flex: 1; min-width: 300px; max-width: 500px;">
-        <a href="Images/distancebtwncrosswalks.png" target="_blank">
-          <img src="Images/distancebtwncrosswalks.png" alt="R Crosswalk Analysis" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-        </a>
-        <p style="margin-top: 0.5em;">This R map analyzes the spatial distribution of crosswalks at the census tract level, including average distances between them to evaluate pedestrian infrastructure. This project used R packages including sf, dplyr, ggplot2, viridis, tigris, and openxlsx.
-        </p>
-
-        <!-- Toggle Button -->
-        <button onclick="document.getElementById('r-snippet').classList.toggle('hidden')">
-          Show R Code
-        </button>
-
-        <!-- Hidden R Code Snippet -->
-        <pre id="r-snippet" class="hidden"><code># Spatial join: assign crosswalks to census tracts
-crosswalks_in_tracts <- st_join(crosswalks, worcester_city_tracts, join = st_within)
-
-# Function to compute average pairwise distance
-calc_pairwise_distances <- function(points_sf) {
-  if (nrow(points_sf) > 1) {
-    dist_matrix <- st_distance(points_sf)
-    mean(dist_matrix[upper.tri(dist_matrix)])  # average of unique distances
-  } else {
-    NA
-  }
-}
-
-# Apply by tract and convert to miles
-average_distances <- crosswalks_in_tracts %>%
-  group_by(GEOID) %>%
-  group_split() %>%
-  sapply(calc_pairwise_distances) %>%
-  units::set_units("miles") %>%
-  drop_units()</code></pre>
-      </div>
-
-    </div>
-  </section>
 
   <!-- ArcGIS Dashboard -->
   <div style="display: flex; flex-wrap: wrap; gap: 2em; margin-bottom: 3em; align-items: center;">
