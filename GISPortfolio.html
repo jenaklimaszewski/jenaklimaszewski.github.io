@@ -47,10 +47,8 @@
     color: #fff;
   }
 
-  /* Toggle hidden */
   .hidden { display: none; }
 
-  /* Code block style */
   pre code {
     display: block;
     background: #1e1e1e;
@@ -64,9 +62,8 @@
     white-space: pre;
   }
 
-  /* Button styling matching header */
   button {
-    margin-top: 1em;
+    margin-top: 0.5em;
     padding: 0.5em 1em;
     border: none;
     background-color: #ab91b8;
@@ -93,45 +90,34 @@
 
 <section style="max-width: 1100px; margin: 3em auto; padding: 2em;">
   <h2 style="text-align: center; font-size: 2.2em; color: #b0355b; margin-bottom: 2em;">GIS Portfolio</h2>
-  
-    <!-- Python Syracuse Tree Density and Income Analysis -->
-    <div style="display: flex; flex-wrap: wrap; gap: 2em; margin-bottom: 3em; justify-content: center; align-items: flex-start;">
-  
-      <!-- Map -->
-      <div style="flex: 1; min-width: 300px; max-width: 500px;">
-        <a href="Images/syrtreedens_map.png" target="_blank">
-          <img src="Images/syrtreedens_map.png" alt="Python Syracuse Tree Density and Income Analysis" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-        </a>
-        <p style="margin-top: 0.5em;">
-          This project explored the relationship between urban greenery and socioeconomic status in Syracuse, NY. Using Python with GeoPandas and Census data, I created a bivariate choropleth map comparing tree density with median household income at the census tract level. Data was sourced from the Syracuse Data Portal.
-        </p>
-      </div>
-  
-<!-- Scatterplot -->
-<div style="flex: 1; min-width: 300px; max-width: 500px;">
-  <a href="Images/syr_scatterplot.png" target="_blank">
-    <img src="Images/syr_scatterplot.png" alt="Syracuse Tree Density vs Income Scatterplot" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-  </a>
-  <p style="margin-top: 0.5em;">
-    This scatterplot shows tree density versus median household income across Syracuse census tracts. Pixels with higher income tend to have slightly higher tree density, but the correlation is weak.
-  </p>
 
-  <!-- PDF Button -->
-  <div style="margin-top: 0.5em;">
-    <button onclick="window.open('PDFs/Jklimaszewski_TreesReport.pdf', '_blank')" 
-            style="padding: 0.5em 1em; border: none; background-color: #ab91b8; color: white; border-radius: 6px; cursor: pointer;">
-      View Full Syracuse Trees Report
-    </button>
-  </div>
+  <!-- Syracuse Tree Density Analysis -->
+  <div style="display: flex; flex-wrap: wrap; gap: 2em; margin-bottom: 3em; justify-content: center; align-items: flex-start;">
+    <!-- Map -->
+    <div style="flex: 1; min-width: 300px; max-width: 500px;">
+      <a href="Images/syrtreedens_map.png" target="_blank">
+        <img src="Images/syrtreedens_map.png" alt="Python Syracuse Tree Density and Income Analysis" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+      </a>
+      <p style="margin-top: 0.5em;">
+        This project explored the relationship between urban greenery and socioeconomic status in Syracuse, NY. Using Python with GeoPandas and Census data, I created a bivariate choropleth map comparing tree density with median household income at the census tract level. Data was sourced from the Syracuse Data Portal.
+      </p>
+    </div>
 
-  <!-- Python Code Snippet Button -->
-  <div style="margin-top: 0.5em;">
-    <button onclick="document.getElementById('python-snippet').classList.toggle('hidden')" 
-            style="padding: 0.5em 1em; border: none; background-color: #ab91b8; color: white; border-radius: 6px; cursor: pointer;">
-      Show Python Code Snippet
-    </button>
+    <!-- Scatterplot -->
+    <div style="flex: 1; min-width: 300px; max-width: 500px;">
+      <a href="Images/syr_scatterplot.png" target="_blank">
+        <img src="Images/syr_scatterplot.png" alt="Syracuse Tree Density vs Income Scatterplot" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+      </a>
+      <p style="margin-top: 0.5em;">
+        This scatterplot shows tree density versus median household income across Syracuse census tracts. Pixels with higher income tend to have slightly higher tree density, but the correlation is weak.
+      </p>
 
-    <pre id="python-snippet" class="hidden" style="margin-top: 0.5em; background: #f5f5f5; padding: 1em; border-radius: 6px; overflow-x: auto;">
+      <!-- PDF Button -->
+      <button onclick="window.open('PDFs/Jklimaszewski_TreesReport.pdf', '_blank')">View Full Syracuse Trees Report</button>
+
+      <!-- Python Code Snippet -->
+      <button onclick="document.getElementById('python-snippet').classList.toggle('hidden')">Show Python Code Snippet</button>
+      <pre id="python-snippet" class="hidden" style="margin-top: 0.5em; background: #f5f5f5; padding: 1em; border-radius: 6px; overflow-x: auto;">
 <code>tracts_full['income_quantile'] = pd.qcut(tracts_full['B19013_001E'], q=3, labels=[1,2,3])
 tracts_full['tree_quantile'] = pd.qcut(tracts_full['tree_density'], q=3, labels=[1,2,3])
 tracts_full['bivariate_class'] = tracts_full['income_quantile'].astype(str) + "-" + tracts_full['tree_quantile'].astype(str)
@@ -144,153 +130,119 @@ bivariate_colors = {
 tracts_full['color'] = tracts_full['bivariate_class'].map(bivariate_colors)
 
 tracts_full.plot(color=tracts_full['color'], edgecolor='black', linewidth=0.1)</code></pre>
+    </div>
   </div>
-</div>
 
-  
-    <!-- Worcester Pedestrian Infrastructure Analysis (QGIS + R) -->
-    <section style="margin-bottom: 3em;">
-      <h2 style="text-align: center; font-size: 2em; color: #b0355b; margin-bottom: 1.5em;">Worcester Pedestrian Infrastructure Analysis</h2>
-      <div style="display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; align-items: flex-start; margin-bottom: 2em;">
-  
-        <!-- QGIS Map -->
-        <div style="flex: 1; min-width: 300px; max-width: 500px;">
-          <a href="Images/busstopsshrews.png" target="_blank">
-            <img src="Images/busstopsshrews.png" alt="QGIS Cartography" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-          </a>
-          <p style="margin-top: 0.5em;">
-            For a group project, I analyzed a census tract in Worcester with multiple pedestrian safety incidents. This QGIS map shows bus stops in the Upper Shrewsbury Census Tract to examine transit accessibility. Data came from the US Census and Worcester Open Data Portal.
-          </p>
-        </div>
-  
+  <!-- Worcester Pedestrian Analysis -->
+  <section style="margin-bottom: 3em;">
+    <h2 style="text-align: center; font-size: 2em; color: #b0355b; margin-bottom: 1.5em;">Worcester Pedestrian Infrastructure Analysis</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; align-items: flex-start; margin-bottom: 2em;">
+      
+      <!-- QGIS Map -->
+      <div style="flex: 1; min-width: 300px; max-width: 500px;">
+        <a href="Images/busstopsshrews.png" target="_blank">
+          <img src="Images/busstopsshrews.png" alt="QGIS Cartography" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        </a>
+        <p style="margin-top: 0.5em;">
+          For a group project, I analyzed a census tract in Worcester with multiple pedestrian safety incidents. This QGIS map shows bus stops in the Upper Shrewsbury Census Tract to examine transit accessibility. Data came from the US Census and Worcester Open Data Portal.
+        </p>
+      </div>
+
       <!-- R Crosswalk Map -->
-<div style="flex: 1; min-width: 300px; max-width: 500px;">
-  <a href="Images/distancebtwncrosswalks.png" target="_blank">
-    <img src="Images/distancebtwncrosswalks.png" alt="R Crosswalk Analysis" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-  </a>
-  <p style="margin-top: 0.5em;">
-    The boxplot shows the relationship between nightlight residuals and the percent of public housing coverage per pixel. Pixels with 25%-50% coverage tend to have the highest residuals, while 50%-100% coverage is second. This may reflect the placement of street lights relative to public housing.
-  </p>
-
-  <!-- Show R Code Button -->
-  <button onclick="document.getElementById('nightlight-snippet').classList.toggle('hidden')" 
-          style="margin-top: 0.5em; padding: 0.5em 1em; border: none; background-color: #ab91b8; color: white; border-radius: 6px; cursor: pointer;">
-    Show R Code
-  </button>
-
-  <pre id="nightlight-snippet" class="hidden"><code>
+      <div style="flex: 1; min-width: 300px; max-width: 500px;">
+        <a href="Images/distancebtwncrosswalks.png" target="_blank">
+          <img src="Images/distancebtwncrosswalks.png" alt="R Crosswalk Analysis" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        </a>
+        <p style="margin-top: 0.5em;">
+          The boxplot shows the relationship between nightlight residuals and the percent of public housing coverage per pixel. Pixels with 25%-50% coverage tend to have the highest residuals, while 50%-100% coverage is second. This may reflect the placement of street lights relative to public housing.
+        </p>
+        <button onclick="document.getElementById('nightlight-snippet').classList.toggle('hidden')">Show R Code</button>
+        <pre id="nightlight-snippet" class="hidden"><code>
 ### Creating Boxplot
 ### Creating residual tibble
 rcl <- cbind(c(0, 0.001, seq(1, 15, 1)), c(0.001, seq(1, 16, 1)), 1:17)
 data_stk <- mask(mask(c(bos_avg, income_mask, ph_mask, pd_mask), income_vect), bos_bound)
 data_stk <- c(data_stk, classify(data_stk[[3]], rcl, include.lowest = TRUE))
 names(data_stk) <- c("lights", "income", "ph_pct", "pop", "ph_cat")
-data_tbl <- as.data.frame(data_stk) %>%
-   na.omit() %>% as_tibble()
+data_tbl <- as.data.frame(data_stk) %>% na.omit() %>% as_tibble()
 
-data_tbl %>%
-  group_by(ph_cat) %>%
-  summarize(mean(lights))
+data_tbl %>% group_by(ph_cat) %>% summarize(mean(lights))
 
-### Extract light vs. income residual
 lgt_resid <- data_complete$lgt_resid
-
-### Add residuals to to data_tbl
 data_tbl$lgt_resid <- lgt_resid
-
-### Adding breaks
 breaks <- c(0, 0.001, 1, 5, 10, 15, 25, 50, 100)  
 data_tbl$ph_cat <- cut(data_tbl$ph_pct, breaks = breaks, include.lowest = TRUE)
 
-### Plotting
 ggplot(data_tbl) + 
   geom_boxplot(aes(x = lgt_resid, color = ph_cat)) +
   labs(x = "Nightlight Residuals",
        y = "Public Housing Percentage per Pixel (%)", 
-       title = "Distribution of Nightlight Residuals Across Public Housing Coverage, Boston")
-  </code></pre>
-</div>
-
-  
-    <!-- Boston Nightlight Analysis (Group Project) -->
-    <section style="margin-bottom: 3em;">
-      <h2 style="text-align: center; font-size: 2em; color: #b0355b; margin-bottom: 1.5em;">Boston Nightlight Analysis</h2>
-      
-      <div style="display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; align-items: flex-start; margin-bottom: 2em;">
-  
-        <!-- Boxplot Image -->
-        <div style="flex: 1; min-width: 300px; max-width: 500px;">
-          <a href="Images/ph_bp_bos.png" target="_blank">
-            <img src="Images/ph_bp_bos.png" alt="Boston Nightlight Boxplot" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-          </a>
-          <p style="margin-top: 0.5em;">
-            For a group project building on work done by students in a previous semester, I analyzed Boston using census data and NASA nightlight data. The boxplot shows the relationship between nightlight residuals and the percent of public housing coverage per pixel. Pixels with 25%–50% coverage have the highest nightlight residuals, while 50%–100% coverage pixels have the second highest, likely because they are located in the center of developments. R packages used include <code>terra</code>, <code>tidycensus</code>, <code>tigris</code>, <code>dplyr</code>, and <code>ggplot2</code>.
-          </p>
-        </div>
-  
-        <!-- Code Snippet -->
-        <div style="flex-basis: 100%; margin-top: 1em;">
-          <button onclick="document.getElementById('bos-nightlight-snippet').classList.toggle('hidden')" style="margin-top: 1em; padding: 0.5em 1em; border: none; background-color: #ab91b8; color: white; border-radius: 6px; cursor: pointer;">
-            Show R Code Snippet
-          </button>
-          <pre id="bos-nightlight-snippet" class="hidden" style="margin-top: 1em; background: #f5f5f5; padding: 1em; border-radius: 6px; overflow-x: auto;">
-  <code>### Creating Boxplot
-  ### Creating residual tibble
-  rcl <- cbind(c(0, 0.001, seq(1, 15, 1)), c(0.001, seq(1, 16, 1)), 1:17)
-  data_stk <- mask(mask(c(bos_avg, income_mask, ph_mask, pd_mask), income_vect), bos_bound)
-  data_stk <- c(data_stk, classify(data_stk[[3]], rcl, include.lowest = TRUE))
-  names(data_stk) <- c("lights", "income", "ph_pct", "pop", "ph_cat")
-  data_tbl <- as.data.frame(data_stk) %>%
-     na.omit() %>% as_tibble()
-  
-  data_tbl %>%
-    group_by(ph_cat) %>%
-    summarize(mean(lights))
-  
-  ### Extract light vs. income residual
-  lgt_resid <- data_complete$lgt_resid
-  
-  ### Add residuals to data_tbl
-  data_tbl$lgt_resid <- lgt_resid
-  
-  ### Adding breaks
-  breaks <- c(0, 0.001, 1, 5, 10, 15, 25, 50, 100)  
-  data_tbl$ph_cat <- cut(data_tbl$ph_pct, breaks = breaks, include.lowest = TRUE)
-  
-  ### Plotting
-  ggplot(data_tbl) + 
-    geom_boxplot(aes(x = lgt_resid, color = ph_cat)) +
-    labs(x = "Nightlight Residuals",
-         y = "Public Housing Percentage per Pixel (%)", 
-         title = "Distribution of Nightlight Residuals Across Public Housing Coverage, Boston")</code></pre>
-        </div>
-  
+       title = "Distribution of Nightlight Residuals Across Public Housing Coverage, Boston")</code></pre>
       </div>
-    </section>
+    </div>
   </section>
-  
+
+  <!-- Boston Nightlight Analysis -->
+  <section style="margin-bottom: 3em;">
+    <h2 style="text-align: center; font-size: 2em; color: #b0355b; margin-bottom: 1.5em;">Boston Nightlight Analysis</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; align-items: flex-start; margin-bottom: 2em;">
+      <!-- Boxplot -->
+      <div style="flex: 1; min-width: 300px; max-width: 500px;">
+        <a href="Images/ph_bp_bos.png" target="_blank">
+          <img src="Images/ph_bp_bos.png" alt="Boston Nightlight Boxplot" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        </a>
+        <p style="margin-top: 0.5em;">
+          For a group project building on previous student work, I analyzed Boston using census and NASA nightlight data. The boxplot shows nightlight residuals by public housing coverage. Pixels with 25%-50% coverage have the highest residuals, and 50%-100% coverage the second highest. R packages used: <code>terra</code>, <code>tidycensus</code>, <code>tigris</code>, <code>dplyr</code>, <code>ggplot2</code>.
+        </p>
+      </div>
+
+      <!-- Code Snippet -->
+      <div style="flex-basis: 100%; margin-top: 1em;">
+        <button onclick="document.getElementById('bos-nightlight-snippet').classList.toggle('hidden')">Show R Code Snippet</button>
+        <pre id="bos-nightlight-snippet" class="hidden" style="margin-top: 0.5em; background: #f5f5f5; padding: 1em; border-radius: 6px; overflow-x: auto;">
+<code>### Creating Boxplot
+### Creating residual tibble
+rcl <- cbind(c(0, 0.001, seq(1, 15, 1)), c(0.001, seq(1, 16, 1)), 1:17)
+data_stk <- mask(mask(c(bos_avg, income_mask, ph_mask, pd_mask), income_vect), bos_bound)
+data_stk <- c(data_stk, classify(data_stk[[3]], rcl, include.lowest = TRUE))
+names(data_stk) <- c("lights", "income", "ph_pct", "pop", "ph_cat")
+data_tbl <- as.data.frame(data_stk) %>% na.omit() %>% as_tibble()
+
+data_tbl %>% group_by(ph_cat) %>% summarize(mean(lights))
+
+lgt_resid <- data_complete$lgt_resid
+data_tbl$lgt_resid <- lgt_resid
+breaks <- c(0, 0.001, 1, 5, 10, 15, 25, 50, 100)  
+data_tbl$ph_cat <- cut(data_tbl$ph_pct, breaks = breaks, include.lowest = TRUE)
+
+ggplot(data_tbl) + 
+  geom_boxplot(aes(x = lgt_resid, color = ph_cat)) +
+  labs(x = "Nightlight Residuals",
+       y = "Public Housing Percentage per Pixel (%)", 
+       title = "Distribution of Nightlight Residuals Across Public Housing Coverage, Boston")</code></pre>
+      </div>
+    </div>
+  </section>
+
   <!-- ArcGIS Dashboard -->
-  <div style="display: flex; flex-wrap: wrap; gap: 2em; margin-bottom: 3em; align-items: center;">
+  <div style="display: flex; flex-wrap: wrap; gap: 2em; margin-bottom: 3em; justify-content: center; align-items: center;">
     <a href="Images/arcgisdashboard.png" target="_blank">
       <img src="Images/arcgisdashboard.png" alt="ArcGIS Dashboard" style="flex: 1; max-width: 500px; width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
     </a>
-    <div style="flex: 2;">
+    <div style="flex: 2; max-width: 500px;">
       <h3>ArcGIS Dashboard</h3>
-      <p>For an undergraduate course, I built an ArcGIS Dashboard mapping food pantries in Worcester, MA and showing bus stops within 400 meters. I used buffers around the pantries and a spatial join to identify bus stops located within those zones.
-      The dashboard visualizes transit accessibility to food resources, helping identify which pantries are easily reached by public transportation. If I were to add to this project, I would include a grocery store toggle. This project was meaningful because I
-      worked at my university's pantry at the time, and the project was later included in a student-created resource guide.</p>
+      <p>For an undergraduate course, I built an ArcGIS Dashboard mapping food pantries in Worcester, MA and showing bus stops within 400 meters. I used buffers and spatial joins to identify bus stops in those zones. The dashboard visualizes transit accessibility to food resources. If I were to add to this project, I would include a grocery store toggle. This project was meaningful because I worked at my university's pantry at the time, and it was later included in a student-created resource guide.</p>
     </div>
   </div>
 
   <!-- ArcGIS Cartography -->
-  <div style="display: flex; flex-wrap: wrap; gap: 2em; margin-bottom: 3em; align-items: center;">
+  <div style="display: flex; flex-wrap: wrap; gap: 2em; margin-bottom: 3em; justify-content: center; align-items: center;">
     <a href="Images/columbiacastresources.jpg" target="_blank">
       <img src="Images/columbiacastresources.jpg" alt="ArcGIS Cartography" style="flex: 1; max-width: 500px; width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
     </a>
-    <div style="flex: 2;">
+    <div style="flex: 2; max-width: 500px;">
       <h3>ArcGIS Cartography</h3>
-      <p>I designed an ArcGIS map of community resources in The Port neighborhood of Cambridge, MA for an affordable housing proposal competition with the Federal Home Loan Bank of Boston. 
-      The map shows important amenities such as food access points and schools, demonstrating that the area is well-resourced for potential residents.</p>
+      <p>I designed an ArcGIS map of community resources in The Port neighborhood of Cambridge, MA for an affordable housing proposal competition. The map shows important amenities such as food access points and schools, demonstrating that the area is well-resourced for potential residents.</p>
     </div>
   </div>
 </section>
