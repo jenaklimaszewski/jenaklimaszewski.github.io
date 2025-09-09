@@ -154,8 +154,7 @@ tracts_full.plot(color=tracts_full['color'], edgecolor='black', linewidth=0.1)</
           <img src="Images/distancebtwncrosswalks.png" alt="R Crosswalk Analysis" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
         </a>
         <p style="margin-top: 0.5em;">
-          The boxplot shows the relationship between nightlight residuals and the percent of public housing coverage per pixel. Pixels with 25%-50% coverage tend to have the highest residuals, while 50%-100% coverage is second. This may reflect the placement of street lights relative to public housing.
-        </p>
+          This R map analyzes the spatial distribution of crosswalks at the census tract level, including average distances between them to evaluate pedestrian infrastructure. This project used R packages including sf, dplyr, ggplot2, viridis, tigris, and openxlsx.
         <button onclick="document.getElementById('nightlight-snippet').classList.toggle('hidden')">Show R Code</button>
         <pre id="nightlight-snippet" class="hidden"><code>
 ### Creating Boxplot
