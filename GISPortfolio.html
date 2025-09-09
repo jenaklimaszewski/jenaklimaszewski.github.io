@@ -133,54 +133,84 @@ tracts_full.plot(color=tracts_full['color'], edgecolor='black', linewidth=0.1)</
     </div>
   </div>
 
-  <!-- Worcester Pedestrian Analysis -->
-  <section style="margin-bottom: 3em;">
-    <h2 style="text-align: center; font-size: 2em; color: #b0355b; margin-bottom: 1.5em;">Worcester Pedestrian Infrastructure Analysis</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; align-items: flex-start; margin-bottom: 2em;">
-      
-      <!-- QGIS Map -->
-      <div style="flex: 1; min-width: 300px; max-width: 500px;">
-        <a href="Images/busstopsshrews.png" target="_blank">
-          <img src="Images/busstopsshrews.png" alt="QGIS Cartography" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-        </a>
-        <p style="margin-top: 0.5em;">
-          For a group project, I analyzed a census tract in Worcester with multiple pedestrian safety incidents. This QGIS map shows bus stops in the Upper Shrewsbury Census Tract to examine transit accessibility. Data came from the US Census and Worcester Open Data Portal.
-        </p>
-      </div>
+<!-- Worcester Pedestrian Analysis -->
+<section style="margin-bottom: 3em;">
+  <h2 style="text-align: center; font-size: 2em; color: #b0355b; margin-bottom: 1.5em;">
+    Worcester Pedestrian Infrastructure Analysis
+  </h2>
 
-      <!-- R Crosswalk Map -->
-      <div style="flex: 1; min-width: 300px; max-width: 500px;">
-        <a href="Images/distancebtwncrosswalks.png" target="_blank">
-          <img src="Images/distancebtwncrosswalks.png" alt="R Crosswalk Analysis" style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-        </a>
-        <p style="margin-top: 0.5em;">
-          This R map analyzes the spatial distribution of crosswalks at the census tract level, including average distances between them to evaluate pedestrian infrastructure. This project used R packages including <code>sf</code>, <code>dplyr</code>, and <code>ggplot2</code>.
-
-        <button onclick="document.getElementById('crosswalk-snippet').classList.toggle('hidden')">Show R Code</button>
-        <pre id="crosswalk-snippet" class="hidden"><code>
-### Creating Boxplot
-### Creating residual tibble
-rcl <- cbind(c(0, 0.001, seq(1, 15, 1)), c(0.001, seq(1, 16, 1)), 1:17)
-data_stk <- mask(mask(c(bos_avg, income_mask, ph_mask, pd_mask), income_vect), bos_bound)
-data_stk <- c(data_stk, classify(data_stk[[3]], rcl, include.lowest = TRUE))
-names(data_stk) <- c("lights", "income", "ph_pct", "pop", "ph_cat")
-data_tbl <- as.data.frame(data_stk) %>% na.omit() %>% as_tibble()
-
-data_tbl %>% group_by(ph_cat) %>% summarize(mean(lights))
-
-lgt_resid <- data_complete$lgt_resid
-data_tbl$lgt_resid <- lgt_resid
-breaks <- c(0, 0.001, 1, 5, 10, 15, 25, 50, 100)  
-data_tbl$ph_cat <- cut(data_tbl$ph_pct, breaks = breaks, include.lowest = TRUE)
-
-ggplot(data_tbl) + 
-  geom_boxplot(aes(x = lgt_resid, color = ph_cat)) +
-  labs(x = "Nightlight Residuals",
-       y = "Public Housing Percentage per Pixel (%)", 
-       title = "Distribution of Nightlight Residuals Across Public Housing Coverage, Boston")</code></pre>
-      </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; align-items: flex-start; margin-bottom: 2em;">
+    
+    <!-- QGIS Map -->
+    <div style="flex: 1; min-width: 300px; max-width: 500px;">
+      <a href="Images/busstopsshrews.png" target="_blank">
+        <img src="Images/busstopsshrews.png" alt="QGIS Cartography" 
+             style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+      </a>
+      <p style="margin-top: 0.5em;">
+        For a group project, I analyzed a census tract in Worcester with multiple pedestrian safety incidents. This QGIS map shows bus stops in the Upper Shrewsbury Census Tract to examine transit accessibility. Data came from the US Census and Worcester Open Data Portal.
+      </p>
     </div>
-  </section>
+
+    <!-- R Crosswalk Map -->
+    <div style="flex: 1; min-width: 300px; max-width: 500px;">
+      <a href="Images/distancebtwncrosswalks.png" target="_blank">
+        <img src="Images/distancebtwncrosswalks.png" alt="R Crosswalk Analysis" 
+             style="width: 100%; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+      </a>
+      <p style="margin-top: 0.5em;">
+        This R map analyzes the spatial distribution of crosswalks at the census tract level, including average distances between them to evaluate pedestrian infrastructure. This project used R packages including <code>sf</code>, <code>dplyr</code>, and <code>ggplot2</code>.
+      </p>
+
+      <!-- Toggle Button -->
+      <button onclick="document.getElementById('crosswalk-snippet').classList.toggle('hidden')" 
+              style="margin-top: 0.5em; padding: 0.5em 1em; border: none; background-color: #4a90e2; color: white; border-radius: 6px; cursor: pointer;">
+        Show R Code
+      </button>
+
+      <!-- Hidden R Code Snippet -->
+      <pre id="crosswalk-snippet" class="hidden" 
+           style="background: #f5f5f5; padding: 1em; border-radius: 6px; overflow-x: auto; margin-top: 0.5em;">
+<code># Spatial join: assign crosswalks to census tracts
+crosswalks_in_tracts <- st_join(crosswalks, worcester_city_tracts, join = st_within)
+
+# Function to compute average pairwise distance
+calc_pairwise_distances <- function(points_sf) {
+  if (nrow(points_sf) > 1) {
+    dist_matrix <- st_distance(points_sf)
+    mean(dist_matrix[upper.tri(dist_matrix)])  # average of unique distances
+  } else {
+    NA
+  }
+}
+
+# Apply the function to each tract and convert to miles
+average_distances <- crosswalks_in_tracts %>%
+  group_by(GEOID) %>%
+  group_split() %>%
+  sapply(calc_pairwise_distances) %>%
+  units::set_units("miles") %>%
+  drop_units()
+
+# Combine results into a data frame
+tract_avg_distances_worcester <- data.frame(
+  GEOID = unique(crosswalks_in_tracts$GEOID),
+  avg_distance_miles = average_distances
+)
+
+head(tract_avg_distances_worcester)</code>
+      </pre>
+    </div>
+
+  </div> <!-- closes flex container -->
+</section>
+
+<!-- CSS for toggle -->
+<style>
+.hidden { display: none; }
+</style>
+
+
 
   <!-- Boston Nightlight Analysis -->
   <section style="margin-bottom: 3em;">
